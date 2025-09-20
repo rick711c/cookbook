@@ -14,6 +14,11 @@ export interface CreateUserInput {
     password: string;
 }
 
+export interface LoginInput {
+    email: string;
+    password: string;
+}
+
 export interface User {
     id: string;
     fullname: string;
@@ -23,13 +28,19 @@ export interface User {
     updatedAt: DateTime;
 }
 
+export interface AuthPayload {
+    token: string;
+    user: User;
+}
+
 export interface IQuery {
     users(): User[] | Promise<User[]>;
     getUserByEmail(email: string): User | Promise<User>;
 }
 
 export interface IMutation {
-    createUser(data: CreateUserInput): User | Promise<User>;
+    signup(data: CreateUserInput): User | Promise<User>;
+    login(loginInput: LoginInput): AuthPayload | Promise<AuthPayload>;
 }
 
 export type DateTime = any;

@@ -2,32 +2,30 @@
 import { CreateUserInput } from './dto/create-user.dto';
 import { prismaService } from '../prisma/prisma.service';
 import { User as IUser } from '../../lib/graphql/types';
+import { loggerObj } from 'src/util/logger.util';
 
 export class UserRepository {
   constructor() {}
 
-  async create(input: CreateUserInput) {
-    try {
-      const data = await prismaService.user.create({ data: input });
-      return data;
-    } catch (err) {
-      throw err;
-    }
-  }
-
-  async getUserByEmail(email: string): Promise<IUser | null> {
-    try {
-      const data = await prismaService.user.findUnique({
-        where: { email: email },
-      });
-      return data;
-    } catch (err) {
-      throw err;
-    }
-  }
   // async create(data: Prisma.UserCreateInput): Promise<User> {
   //   return prismaService.user.create({
   //     data,
   //   });
   // }
+
+  async getUserById(userid: string): Promise<IUser | null> {
+    try {
+      loggerObj.logInput('UserRepository', 'getUserById', { userid });
+      const data = await prismaService.user.findUnique({ where: { id: userid } });
+      return data;
+    } catch (err) {
+      loggerObj.logError(
+        'UserRepository',
+        'getUserById',
+        { userid },
+        err.message,
+      );
+      throw err;
+    }
+  }
 }

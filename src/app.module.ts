@@ -6,6 +6,7 @@ import { UsersModule } from './modules/users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ExceptionHandlerInterceptor } from './interceptors/exceptionHandle.interceptor';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { ExceptionHandlerInterceptor } from './interceptors/exceptionHandle.inte
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       playground: true,
-      autoSchemaFile: join(process.cwd(), 'src/graphql/schema.graphql'),
+      autoSchemaFile: join(process.cwd(), 'src/lib/graphql/schema.graphql'),
       definitions: {
         path: join(process.cwd(), 'src/lib/graphql/types.ts'),
         outputAs: 'interface',
@@ -21,7 +22,7 @@ import { ExceptionHandlerInterceptor } from './interceptors/exceptionHandle.inte
       debug: false,
       includeStacktraceInErrorResponses: false,
       formatError: (error) => {
-        console.log(error.extensions?.code);
+        console.log(error);
         return {
           message: error.message,
           extensions: {
@@ -31,6 +32,7 @@ import { ExceptionHandlerInterceptor } from './interceptors/exceptionHandle.inte
       },
     }),
     UsersModule,
+    AuthModule
   ],
   providers: [
     {
