@@ -13,8 +13,15 @@ export class UsersResolver {
     return this.usersService.findAll();
   }
 
+  @Query(() => User)
+  getUserByEmail(@Args('email') email: string) {
+    return this.usersService.getUserByEmail(email);
+  }
+
   @Mutation(() => User)
-  async createUser(@Args('data') data: CreateUserInput): Promise<IUser> {
+  async createUser(
+    @Args('data') data: CreateUserInput,
+  ): Promise<IUser | undefined> {
     return this.usersService.create(data);
   }
 }

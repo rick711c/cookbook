@@ -25,6 +25,7 @@ export interface User {
 
 export interface IQuery {
     users(): User[] | Promise<User[]>;
+    getUserByEmail(email: string): User | Promise<User>;
 }
 
 export interface IMutation {
