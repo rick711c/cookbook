@@ -19,14 +19,14 @@ export class ExceptionHandlerInterceptor implements NestInterceptor {
     let message: string;
     let status: number;
     return next.handle().pipe(
-      map((data) => {
-        return {
-          error: false,
-          statuscode: 200,
-          message: 'ok',
-          data: data,
-        };
-      }),
+      // map((data) => {
+      //   return {
+      //     error: false,
+      //     statuscode: 200,
+      //     message: 'ok',
+      //     data: data,
+      //   };
+      // }),
       catchError((error) => {
         if (error instanceof HttpException) {
           throw new GraphQLError(error.message, {
@@ -44,7 +44,7 @@ export class ExceptionHandlerInterceptor implements NestInterceptor {
               break;
             // Add more cases for other Prisma error codes as needed
             default:
-              message = `Database error: ${error.message}`;
+              message = ` ${error.message}`;
               break;
           }
           throw new HttpException(message, status);

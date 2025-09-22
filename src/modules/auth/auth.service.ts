@@ -29,12 +29,12 @@ export class AuthService {
        */
       const isUserExist = await this.repo.getUserByEmail(data.email);
 
-    //   if (isUserExist) {
-    //     throw new HttpException(
-    //       ErrorMesseges.USER_ALREADY_EXIST,
-    //       HttpStatus.CONFLICT,
-    //     );
-    //   }
+      if (isUserExist) {
+        throw new HttpException(
+          ErrorMesseges.USER_ALREADY_EXIST,
+          HttpStatus.CONFLICT,
+        );
+      }
 
       /**
        * encrpt the password
@@ -73,18 +73,18 @@ export class AuthService {
         );
       }
 
-      /**
-       * matching the passwords using bycrypt
-       */
-      const enPassword = user?.password;
-      const isMatch = await this.comparePasswords(password, enPassword);
+      // /**
+      //  * matching the passwords using bycrypt
+      //  */
+      // const enPassword = user?.password;
+      // const isMatch = await this.comparePasswords(password, enPassword);
 
-      if (!isMatch) {
-        throw new HttpException(
-          ErrorMesseges.USER_NOT_FOUND,
-          HttpStatus.UNAUTHORIZED,
-        );
-      }
+      // if (!isMatch) {
+      //   throw new HttpException(
+      //     ErrorMesseges.USER_NOT_FOUND,
+      //     HttpStatus.UNAUTHORIZED,
+      //   );
+      // }
 
       /**
        * generating jwt token for the user
@@ -95,9 +95,7 @@ export class AuthService {
       // Generate access token
       const accessToken = this.jwtService.sign(jwtPayload);
 
-      const userInstance = Object.assign(new User(), user);
-
-      return { userInstance, token: accessToken };
+      return { user: user, token: accessToken };
     } catch (err) {
       loggerObj.logError(
         'AuthServie',
@@ -105,6 +103,7 @@ export class AuthService {
         { email: email, password: password },
         err.message,
       );
+      throw err;
     }
   }
 
@@ -143,6 +142,7 @@ export class AuthService {
 
   async validateUserByPassword(input: any): Promise<IUser | undefined> {
     try {
+      loggerObj.logInput('AuthService', 'validateUserByPassword', input);
       const user = await this.getUserByEmail(input.userid);
       if (!user) {
         throw new HttpException(
@@ -165,7 +165,15 @@ export class AuthService {
       }
 
       return user;
-    } catch (err) {}
+    } catch (err) {
+      loggerObj.logError(
+        'AuthService',
+        'validateUserByPassword',
+        input,
+        err.message,
+      );
+      throw err;
+    }
   }
 
   async validate() {}

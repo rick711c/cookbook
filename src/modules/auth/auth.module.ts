@@ -3,6 +3,8 @@ import { AuthService } from './auth.service';
 import { AuthRepository } from './auth.repository';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthResolver } from './auth.resolver';
+import * as dotenv from 'dotenv';
+dotenv.config({ path: './.env' });
 
 @Module({
   imports: [

@@ -4,19 +4,17 @@ import { CreateUserInput } from '../users/dto/create-user.dto';
 import { User as IUser } from '../../lib/graphql/types';
 import { AuthService } from './auth.service';
 import { LoginInput } from './dto/login.dto';
-import { UseGuards } from '@nestjs/common';
-import { LocalAuthGuard } from 'src/guards/local-auth.guard';
 import { loggerObj } from 'src/util/logger.util';
 import { AuthPayload } from './dto/auth_res.dto';
+import { UseGuards } from '@nestjs/common';
+import { LocalAuthGuard } from 'src/guards/local-auth.guard';
 
 @Resolver(() => User)
 export class AuthResolver {
   constructor(private authservice: AuthService) {}
 
   @Mutation(() => User, { name: 'signup' })
-  async createUser(
-    @Args('data') data: CreateUserInput,
-  ): Promise<IUser> {
+  async createUser(@Args('data') data: CreateUserInput): Promise<IUser> {
     return this.authservice.create(data);
   }
 
@@ -25,14 +23,18 @@ export class AuthResolver {
     return this.authservice.getUserByEmail(email);
   }
 
-  //   @UseGuards(LocalAuthGuard)
+  // @UseGuards(LocalAuthGuard)
   @Mutation(() => AuthPayload)
   async login(@Args('loginInput') loginInput: LoginInput) {
-    loggerObj.logInput('AuthResolver', 'login', loginInput);
-    const res = await this.authservice.login(
-      loginInput.email,
-      loginInput.password,
-    );
-    return res;
+    try {
+      loggerObj.logInput('AuthResolver', 'login', loginInput);
+      const res = await this.authservice.login(
+        loginInput.email,
+        loginInput.password,
+      );
+      return res;
+    } catch (err) {
+      throw err;
+    }
   }
 }

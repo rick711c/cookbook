@@ -10,7 +10,7 @@ import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       playground: true,
@@ -32,7 +32,7 @@ import { AuthModule } from './modules/auth/auth.module';
       },
     }),
     UsersModule,
-    AuthModule
+    AuthModule,
   ],
   providers: [
     {
