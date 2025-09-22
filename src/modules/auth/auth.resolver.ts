@@ -8,6 +8,7 @@ import { loggerObj } from 'src/util/logger.util';
 import { AuthPayload } from './dto/auth_res.dto';
 import { UseGuards } from '@nestjs/common';
 import { LocalAuthGuard } from 'src/guards/local-auth.guard';
+import { Public } from 'src/decorator/public.decorator';
 
 @Resolver(() => User)
 export class AuthResolver {
@@ -23,7 +24,8 @@ export class AuthResolver {
     return this.authservice.getUserByEmail(email);
   }
 
-  // @UseGuards(LocalAuthGuard)
+  @Public()
+  @UseGuards(LocalAuthGuard)
   @Mutation(() => AuthPayload)
   async login(@Args('loginInput') loginInput: LoginInput) {
     try {

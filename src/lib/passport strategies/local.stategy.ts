@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
 import { AuthService } from 'src/modules/auth/auth.service';
@@ -10,21 +14,22 @@ import { loggerObj } from 'src/util/logger.util';
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private authService: AuthService) {
-    super({
-      usernameField: 'username',
-      passwordField: 'password',
-      passReqToCallback: true,
-    });
+    // super({
+    //   usernameField: 'email',
+    //   passwordField: 'password',
+    //   passReqToCallback: true,
+    // });
+    super();
   }
 
-  async validate(input: any): Promise<any> {
-    loggerObj.logInfo('validate local stategy isrunnning')
+  async validate(username: string,password:string): Promise<any> {
+    console.log('validate local stategy isrunnning', );
     // const credentials = plainToInstance(PassWordLoginDto, req.body);
-    const user = await this.authService.validateUserByPassword(input);
+    const user = await this.authService.validateUserByPassword(username,password);
     if (!user) {
-      throw new UnauthorizedException();
+      throw new HttpException('error from local stategy', 401);
     }
-    const { password, ...rest } = user;
-    return rest;
+    // const { password, ...rest } = user;
+    return user;
   }
 }

@@ -140,10 +140,16 @@ export class AuthService {
     }
   }
 
-  async validateUserByPassword(input: any): Promise<IUser | undefined> {
+  async validateUserByPassword(
+    username: string,
+    password: string,
+  ): Promise<IUser | undefined> {
     try {
-      loggerObj.logInput('AuthService', 'validateUserByPassword', input);
-      const user = await this.getUserByEmail(input.userid);
+      loggerObj.logInput('AuthService', 'validateUserByPassword', {
+        username,
+        password,
+      });
+      const user = await this.getUserByEmail(username);
       if (!user) {
         throw new HttpException(
           ErrorMesseges.USER_NOT_FOUND,
@@ -155,7 +161,7 @@ export class AuthService {
        * matching the passwords using bycrypt
        */
       const enPassword = user?.password;
-      const isMatch = await this.comparePasswords(input.password, enPassword);
+      const isMatch = await this.comparePasswords(password, enPassword);
 
       if (!isMatch) {
         throw new HttpException(
@@ -169,7 +175,7 @@ export class AuthService {
       loggerObj.logError(
         'AuthService',
         'validateUserByPassword',
-        input,
+        { username, password },
         err.message,
       );
       throw err;

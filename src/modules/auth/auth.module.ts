@@ -14,5 +14,6 @@ dotenv.config({ path: './.env' });
     }),
   ],
   providers: [AuthService, AuthRepository, AuthResolver],
+  exports: [AuthService],
 })
 export class AuthModule {}
