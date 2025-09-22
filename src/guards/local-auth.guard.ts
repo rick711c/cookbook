@@ -15,7 +15,7 @@ export class LocalAuthGuard extends AuthGuard('local') {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const ctx = GqlExecutionContext.create(context);
     const request = ctx.getContext().req;
-    request.body = ctx.getArgs(); // Extract args and set to body for Passport
+    request.body = ctx.getArgs(); 
     // console.log(request.body, request.headers);
     // console.log('Local auth guard');
 
@@ -34,9 +34,8 @@ export class LocalAuthGuard extends AuthGuard('local') {
         username: args.loginInput.email,
         password: args.loginInput.password,
       };
-      console.log(req.body);
+    //   console.log(req.body);
     }
-    console.log('getRequest', JSON.stringify(gqlContext.req.body));
     return gqlContext.req;
   }
 }
