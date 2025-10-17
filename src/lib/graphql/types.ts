@@ -19,6 +19,15 @@ export interface LoginInput {
     password: string;
 }
 
+export interface CreateRecipieInput {
+    userId: string;
+    title: string;
+    description: string;
+    prepTime: number;
+    cookTime: number;
+    servings: number;
+}
+
 export interface User {
     id: string;
     fullname: string;
@@ -33,6 +42,17 @@ export interface AuthPayload {
     user: User;
 }
 
+export interface Recipie {
+    userId: string;
+    title: string;
+    description: string;
+    prepTime: number;
+    cookTime: number;
+    servings: number;
+    createdAt: DateTime;
+    updatedAt: DateTime;
+}
+
 export interface IQuery {
     users(): User[] | Promise<User[]>;
     getUserByEmail(email: string): User | Promise<User>;
@@ -41,6 +61,7 @@ export interface IQuery {
 export interface IMutation {
     signup(data: CreateUserInput): User | Promise<User>;
     login(loginInput: LoginInput): AuthPayload | Promise<AuthPayload>;
+    createrecipie(createRecipieInput: CreateRecipieInput): Recipie | Promise<Recipie>;
 }
 
 export type DateTime = any;

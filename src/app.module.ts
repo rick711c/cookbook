@@ -11,6 +11,7 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { LocalStrategy } from './lib/passport strategies/local.stategy';
 import { JwtStrategy } from './lib/passport strategies/jwt.strategy';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { RecipieModule } from './modules/recipe/recipie.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
     }),
     UsersModule,
     AuthModule,
+    RecipieModule
   ],
   providers: [
     LocalStrategy,

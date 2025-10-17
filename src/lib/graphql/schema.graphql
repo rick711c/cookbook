@@ -21,6 +21,17 @@ type AuthPayload {
   user: User!
 }
 
+type Recipie {
+  userId: String!
+  title: String!
+  description: String!
+  prepTime: Float!
+  cookTime: Float!
+  servings: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type Query {
   users: [User!]!
   getUserByEmail(email: String!): User!
@@ -29,6 +40,7 @@ type Query {
 type Mutation {
   signup(data: CreateUserInput!): User!
   login(loginInput: LoginInput!): AuthPayload!
+  createrecipie(createRecipieInput: CreateRecipieInput!): Recipie!
 }
 
 input CreateUserInput {
@@ -40,4 +52,13 @@ input CreateUserInput {
 input LoginInput {
   email: String!
   password: String!
+}
+
+input CreateRecipieInput {
+  userId: String!
+  title: String!
+  description: String!
+  prepTime: Float!
+  cookTime: Float!
+  servings: Float!
 }
