@@ -14,6 +14,7 @@ import { Public } from 'src/decorator/public.decorator';
 export class AuthResolver {
   constructor(private authservice: AuthService) {}
 
+  @Public()
   @Mutation(() => User, { name: 'signup' })
   async createUser(@Args('data') data: CreateUserInput): Promise<IUser> {
     return this.authservice.create(data);

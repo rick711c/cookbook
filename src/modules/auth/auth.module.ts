@@ -9,6 +9,7 @@ dotenv.config({ path: './.env' });
 @Module({
   imports: [
     JwtModule.register({
+      global:true,
       secret: process.env.SECRET_KEY,
       signOptions: { expiresIn: '10 days' },
     }),

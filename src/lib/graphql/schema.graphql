@@ -35,6 +35,7 @@ type Recipie {
 type Query {
   users: [User!]!
   getUserByEmail(email: String!): User!
+  getRecipie(id: String!): Recipie!
 }
 
 type Mutation {

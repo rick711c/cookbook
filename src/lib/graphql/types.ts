@@ -56,6 +56,7 @@ export interface Recipie {
 export interface IQuery {
     users(): User[] | Promise<User[]>;
     getUserByEmail(email: string): User | Promise<User>;
+    getRecipie(id: string): Recipie | Promise<Recipie>;
 }
 
 export interface IMutation {

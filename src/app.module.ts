@@ -38,24 +38,26 @@ import { RecipieModule } from './modules/recipe/recipie.module';
     }),
     UsersModule,
     AuthModule,
-    RecipieModule
+    RecipieModule,
   ],
   providers: [
     LocalStrategy,
+        JwtStrategy,
+
     // JwtStrategy,
 
     {
       provide: APP_INTERCEPTOR,
       useClass: ExceptionHandlerInterceptor,
     },
-    {
-      provide: APP_GUARD,
-      useClass: LocalAuthGuard,
-    },
     // {
     //   provide: APP_GUARD,
-    //   useClass: JwtAuthGuard,
+    //   useClass: LocalAuthGuard,
     // },
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
   ],
 })
 export class AppModule {}
