@@ -1,4 +1,4 @@
-import { ExtractJwt, Strategy } from 'passport-jwt';
+import { ExtractJwt, Strategy,JwtPayload } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import * as dotenv from 'dotenv';
@@ -17,12 +17,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: any) {
+  async validate(payload: JwtPayload) {
     try {
       loggerObj.logInput('JwtStrategy', 'validate', payload);
-      const context = GqlExecutionContext.create(this['context']);
-      const req = context.getContext().req;
-      console.log('Request Headers:', req.headers);
+      // const context = GqlExecutionContext.create(this['context']);
+      // const req = context.getContext().req;
+      // console.log('Request Headers:', req.headers);
       console.log('JWT Payload:', payload);
       const user = await this.userService.getUserById(payload.userid);
       const { ...rest } = user;
