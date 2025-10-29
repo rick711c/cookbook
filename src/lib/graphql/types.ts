@@ -28,6 +28,12 @@ export interface CreateRecipieInput {
     servings: number;
 }
 
+export interface CreateIngredientDto {
+    recipeId: string;
+    name: string;
+    quantity: string;
+}
+
 export interface User {
     id: string;
     fullname: string;
@@ -53,6 +59,15 @@ export interface Recipie {
     updatedAt: DateTime;
 }
 
+export interface Ingredient {
+    id: string;
+    recipeId: string;
+    name: string;
+    quantity: string;
+    createdAt: DateTime;
+    updatedAt: DateTime;
+}
+
 export interface IQuery {
     users(): User[] | Promise<User[]>;
     getUserByEmail(email: string): User | Promise<User>;
@@ -63,6 +78,7 @@ export interface IMutation {
     signup(data: CreateUserInput): User | Promise<User>;
     login(loginInput: LoginInput): AuthPayload | Promise<AuthPayload>;
     createrecipie(createRecipieInput: CreateRecipieInput): Recipie | Promise<Recipie>;
+    createIngredient(input: CreateIngredientDto): Ingredient | Promise<Ingredient>;
 }
 
 export type DateTime = any;

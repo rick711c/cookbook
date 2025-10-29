@@ -32,6 +32,15 @@ type Recipie {
   updatedAt: DateTime!
 }
 
+type Ingredient {
+  id: String!
+  recipeId: String!
+  name: String!
+  quantity: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type Query {
   users: [User!]!
   getUserByEmail(email: String!): User!
@@ -42,6 +51,7 @@ type Mutation {
   signup(data: CreateUserInput!): User!
   login(loginInput: LoginInput!): AuthPayload!
   createrecipie(createRecipieInput: CreateRecipieInput!): Recipie!
+  createIngredient(input: CreateIngredientDto!): Ingredient!
 }
 
 input CreateUserInput {
@@ -62,4 +72,10 @@ input CreateRecipieInput {
   prepTime: Float!
   cookTime: Float!
   servings: Float!
+}
+
+input CreateIngredientDto {
+  recipeId: String!
+  name: String!
+  quantity: String!
 }
