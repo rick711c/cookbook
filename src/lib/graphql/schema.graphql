@@ -58,6 +58,13 @@ type Rating {
   createdAt: DateTime!
 }
 
+type Follow {
+  id: String!
+  followerId: String!
+  followingId: String!
+  createdAt: DateTime!
+}
+
 type Query {
   users: [User!]!
   getUserByEmail(email: String!): User!
@@ -71,6 +78,7 @@ type Mutation {
   createIngredient(input: CreateIngredientDto!): Ingredient!
   addInstruction(input: AddInstructionDto!): Instruction!
   addRating(input: AddRatingDto!): Rating!
+  addFollower(input: AddFollowerDto!): Follow!
 }
 
 input CreateUserInput {
@@ -109,4 +117,9 @@ input AddRatingDto {
   recipeId: String!
   userId: String!
   rating: Float!
+}
+
+input AddFollowerDto {
+  followerId: String!
+  followingId: String!
 }

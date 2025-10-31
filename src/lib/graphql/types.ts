@@ -46,6 +46,11 @@ export interface AddRatingDto {
     rating: number;
 }
 
+export interface AddFollowerDto {
+    followerId: string;
+    followingId: string;
+}
+
 export interface User {
     id: string;
     fullname: string;
@@ -97,6 +102,13 @@ export interface Rating {
     createdAt: DateTime;
 }
 
+export interface Follow {
+    id: string;
+    followerId: string;
+    followingId: string;
+    createdAt: DateTime;
+}
+
 export interface IQuery {
     users(): User[] | Promise<User[]>;
     getUserByEmail(email: string): User | Promise<User>;
@@ -110,6 +122,7 @@ export interface IMutation {
     createIngredient(input: CreateIngredientDto): Ingredient | Promise<Ingredient>;
     addInstruction(input: AddInstructionDto): Instruction | Promise<Instruction>;
     addRating(input: AddRatingDto): Rating | Promise<Rating>;
+    addFollower(input: AddFollowerDto): Follow | Promise<Follow>;
 }
 
 export type DateTime = any;
