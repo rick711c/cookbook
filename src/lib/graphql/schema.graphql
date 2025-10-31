@@ -50,6 +50,14 @@ type Instruction {
   updatedAt: DateTime!
 }
 
+type Rating {
+  id: String!
+  recipeId: String!
+  userId: String!
+  rating: Float!
+  createdAt: DateTime!
+}
+
 type Query {
   users: [User!]!
   getUserByEmail(email: String!): User!
@@ -62,6 +70,7 @@ type Mutation {
   createrecipie(createRecipieInput: CreateRecipieInput!): Recipie!
   createIngredient(input: CreateIngredientDto!): Ingredient!
   addInstruction: Instruction!
+  addRating: Rating!
 }
 
 input CreateUserInput {

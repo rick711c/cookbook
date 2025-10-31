@@ -77,6 +77,14 @@ export interface Instruction {
     updatedAt: DateTime;
 }
 
+export interface Rating {
+    id: string;
+    recipeId: string;
+    userId: string;
+    rating: number;
+    createdAt: DateTime;
+}
+
 export interface IQuery {
     users(): User[] | Promise<User[]>;
     getUserByEmail(email: string): User | Promise<User>;
@@ -89,6 +97,7 @@ export interface IMutation {
     createrecipie(createRecipieInput: CreateRecipieInput): Recipie | Promise<Recipie>;
     createIngredient(input: CreateIngredientDto): Ingredient | Promise<Ingredient>;
     addInstruction(): Instruction | Promise<Instruction>;
+    addRating(): Rating | Promise<Rating>;
 }
 
 export type DateTime = any;

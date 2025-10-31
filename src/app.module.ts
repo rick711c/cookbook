@@ -14,6 +14,7 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { RecipieModule } from './modules/recipe/recipie.module';
 import { IngredientModule } from './modules/ingredient/ingedient.module';
 import { InstructionModule } from './modules/instruction/instruction.module';
+import { RatingModule } from './modules/rating/rating.module';
 
 @Module({
   imports: [
@@ -42,7 +43,8 @@ import { InstructionModule } from './modules/instruction/instruction.module';
     AuthModule,
     RecipieModule,
     IngredientModule,
-    InstructionModule
+    InstructionModule,
+    RatingModule
   ],
   providers: [
     LocalStrategy,
