@@ -13,6 +13,7 @@ import { JwtStrategy } from './lib/passport strategies/jwt.strategy';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { RecipieModule } from './modules/recipe/recipie.module';
 import { IngredientModule } from './modules/ingredient/ingedient.module';
+import { InstructionModule } from './modules/instruction/instruction.module';
 
 @Module({
   imports: [
@@ -40,7 +41,8 @@ import { IngredientModule } from './modules/ingredient/ingedient.module';
     UsersModule,
     AuthModule,
     RecipieModule,
-    IngredientModule
+    IngredientModule,
+    InstructionModule
   ],
   providers: [
     LocalStrategy,

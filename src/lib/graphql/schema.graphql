@@ -41,6 +41,15 @@ type Ingredient {
   updatedAt: DateTime!
 }
 
+type Instruction {
+  id: String!
+  recipeId: String!
+  stepNumber: Float!
+  description: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type Query {
   users: [User!]!
   getUserByEmail(email: String!): User!
@@ -52,6 +61,7 @@ type Mutation {
   login(loginInput: LoginInput!): AuthPayload!
   createrecipie(createRecipieInput: CreateRecipieInput!): Recipie!
   createIngredient(input: CreateIngredientDto!): Ingredient!
+  addInstruction: Instruction!
 }
 
 input CreateUserInput {

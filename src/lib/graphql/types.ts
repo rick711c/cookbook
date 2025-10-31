@@ -68,6 +68,15 @@ export interface Ingredient {
     updatedAt: DateTime;
 }
 
+export interface Instruction {
+    id: string;
+    recipeId: string;
+    stepNumber: number;
+    description: string;
+    createdAt: DateTime;
+    updatedAt: DateTime;
+}
+
 export interface IQuery {
     users(): User[] | Promise<User[]>;
     getUserByEmail(email: string): User | Promise<User>;
@@ -79,6 +88,7 @@ export interface IMutation {
     login(loginInput: LoginInput): AuthPayload | Promise<AuthPayload>;
     createrecipie(createRecipieInput: CreateRecipieInput): Recipie | Promise<Recipie>;
     createIngredient(input: CreateIngredientDto): Ingredient | Promise<Ingredient>;
+    addInstruction(): Instruction | Promise<Instruction>;
 }
 
 export type DateTime = any;
