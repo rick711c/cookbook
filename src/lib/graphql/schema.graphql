@@ -69,8 +69,8 @@ type Mutation {
   login(loginInput: LoginInput!): AuthPayload!
   createrecipie(createRecipieInput: CreateRecipieInput!): Recipie!
   createIngredient(input: CreateIngredientDto!): Ingredient!
-  addInstruction: Instruction!
-  addRating: Rating!
+  addInstruction(input: AddInstructionDto!): Instruction!
+  addRating(input: AddRatingDto!): Rating!
 }
 
 input CreateUserInput {
@@ -97,4 +97,16 @@ input CreateIngredientDto {
   recipeId: String!
   name: String!
   quantity: String!
+}
+
+input AddInstructionDto {
+  recipeId: String!
+  stepNumber: Float!
+  description: String!
+}
+
+input AddRatingDto {
+  recipeId: String!
+  userId: String!
+  rating: Float!
 }

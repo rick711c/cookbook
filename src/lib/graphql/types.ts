@@ -34,6 +34,18 @@ export interface CreateIngredientDto {
     quantity: string;
 }
 
+export interface AddInstructionDto {
+    recipeId: string;
+    stepNumber: number;
+    description: string;
+}
+
+export interface AddRatingDto {
+    recipeId: string;
+    userId: string;
+    rating: number;
+}
+
 export interface User {
     id: string;
     fullname: string;
@@ -96,8 +108,8 @@ export interface IMutation {
     login(loginInput: LoginInput): AuthPayload | Promise<AuthPayload>;
     createrecipie(createRecipieInput: CreateRecipieInput): Recipie | Promise<Recipie>;
     createIngredient(input: CreateIngredientDto): Ingredient | Promise<Ingredient>;
-    addInstruction(): Instruction | Promise<Instruction>;
-    addRating(): Rating | Promise<Rating>;
+    addInstruction(input: AddInstructionDto): Instruction | Promise<Instruction>;
+    addRating(input: AddRatingDto): Rating | Promise<Rating>;
 }
 
 export type DateTime = any;

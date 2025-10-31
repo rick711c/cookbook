@@ -1,4 +1,4 @@
-import { Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { prismaService } from '../prisma/prisma.service';
 import { AddInstructionDto } from './dto/addInstruction.dto';
 import { Instruction } from 'src/lib/graphql/models/instruction.model';
@@ -9,7 +9,7 @@ export class InstructionResolver {
   constructor(private service: InstructionService) {}
 
   @Mutation(() => Instruction)
-  async addInstruction(input: AddInstructionDto) {
+  async addInstruction(@Args('input') input: AddInstructionDto) {
     try {
       const res = await this.service.addInstruction(input);
       return res;

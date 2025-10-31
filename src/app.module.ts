@@ -7,7 +7,6 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ExceptionHandlerInterceptor } from './interceptors/exceptionHandle.interceptor';
 import { AuthModule } from './modules/auth/auth.module';
-import { LocalAuthGuard } from './guards/local-auth.guard';
 import { LocalStrategy } from './lib/passport strategies/local.stategy';
 import { JwtStrategy } from './lib/passport strategies/jwt.strategy';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
@@ -44,7 +43,8 @@ import { RatingModule } from './modules/rating/rating.module';
     RecipieModule,
     IngredientModule,
     InstructionModule,
-    RatingModule
+    RatingModule,
+    
   ],
   providers: [
     LocalStrategy,
