@@ -14,6 +14,7 @@ import { RecipieModule } from './modules/recipe/recipie.module';
 import { IngredientModule } from './modules/ingredient/ingedient.module';
 import { InstructionModule } from './modules/instruction/instruction.module';
 import { RatingModule } from './modules/rating/rating.module';
+import { FollowerModule } from './modules/follower/follower.module';
 
 @Module({
   imports: [
@@ -29,7 +30,7 @@ import { RatingModule } from './modules/rating/rating.module';
       debug: false,
       includeStacktraceInErrorResponses: false,
       formatError: (error) => {
-        console.log('error is',error);
+        console.log('error is', error);
         return {
           message: error.message,
           extensions: {
@@ -44,11 +45,11 @@ import { RatingModule } from './modules/rating/rating.module';
     IngredientModule,
     InstructionModule,
     RatingModule,
-    
+    FollowerModule,
   ],
   providers: [
     LocalStrategy,
-        JwtStrategy,
+    JwtStrategy,
 
     // JwtStrategy,
 
