@@ -1,4 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { Ingredient } from './ingredient.model';
+import { Instruction } from './instruction.model';
 
 @ObjectType()
 export class Recipie {
@@ -25,4 +27,10 @@ export class Recipie {
 
   @Field()
   updatedAt: Date;
+
+  @Field(()=> [Ingredient])
+  ingredients: Ingredient[];
+
+  @Field(()=> [Instruction])
+  instructions: Instruction[];
 }

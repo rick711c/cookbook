@@ -21,17 +21,6 @@ type AuthPayload {
   user: User!
 }
 
-type Recipie {
-  userId: String!
-  title: String!
-  description: String!
-  prepTime: Float!
-  cookTime: Float!
-  servings: Float!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
 type Ingredient {
   id: String!
   recipeId: String!
@@ -48,6 +37,19 @@ type Instruction {
   description: String!
   createdAt: DateTime!
   updatedAt: DateTime!
+}
+
+type Recipie {
+  userId: String!
+  title: String!
+  description: String!
+  prepTime: Float!
+  cookTime: Float!
+  servings: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  ingredients: [Ingredient!]!
+  instructions: [Instruction!]!
 }
 
 type Rating {
@@ -93,6 +95,12 @@ input LoginInput {
 }
 
 input CreateRecipieInput {
+  recipie: RecipieInput!
+  ingredients: [CreateIngredientDto!]!
+  instructions: [AddInstructionDto!]!
+}
+
+input RecipieInput {
   userId: String!
   title: String!
   description: String!

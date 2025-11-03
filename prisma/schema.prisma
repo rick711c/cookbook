@@ -1,4 +1,6 @@
-// prisma/schema.prisma
+// ----------------------------
+// Prisma Schema with Relations
+// ----------------------------
 
 datasource db {
   provider = "postgresql"
@@ -9,19 +11,30 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// ----------------------------
 // users table
+// ----------------------------
 model User {
   id        String   @id @default(uuid()) @map("id")
-  email     String   @unique              @map("email")
+  email     String   @unique @map("email")
   password  String   @map("password")
   fullname  String   @map("fullname")
-  createdAt DateTime @default(now())      @map("createdAt")
-  updatedAt DateTime @updatedAt           @map("updatedAt")
+  createdAt DateTime @default(now()) @map("createdAt")
+  updatedAt DateTime @updatedAt @map("updatedAt")
+
+  // Relations
+  recipes   Recipe[]
+  ratings   Rating[]
+  comments  Comment[]
+  followers Follow[]  @relation("Follower")
+  following Follow[]  @relation("Following")
 
   @@map("user")
 }
 
+// ----------------------------
 // recipes table
+// ----------------------------
 model Recipe {
   id          String   @id @default(uuid()) @map("id")
   userId      String   @map("userid")
@@ -32,36 +45,55 @@ model Recipe {
   cookTime    Int?     @map("cooktime")
   servings    Int?     @map("servings")
   createdAt   DateTime @default(now()) @map("createdAt")
-  updatedAt   DateTime @updatedAt      @map("updatedAt")
+  updatedAt   DateTime @updatedAt @map("updatedAt")
+
+  // Relations
+  user         User          @relation(fields: [userId], references: [id])
+  ingredients  Ingredient[]
+  instructions Instruction[]
+  ratings      Rating[]
+  comments     Comment[]
 
   @@map("recipe")
 }
 
+// ----------------------------
 // ingredients table
+// ----------------------------
 model Ingredient {
   id        String   @id @default(uuid()) @map("id")
   recipeId  String   @map("recipeid")
   name      String   @map("name")
   quantity  String   @map("quantity")
   createdAt DateTime @default(now()) @map("createdAt")
-  updatedAt DateTime @updatedAt      @map("updatedAt")
+  updatedAt DateTime @updatedAt @map("updatedAt")
+
+  // Relations
+  recipe Recipe @relation(fields: [recipeId], references: [id])
 
   @@map("ingredient")
 }
 
+// ----------------------------
 // instructions table
+// ----------------------------
 model Instruction {
-  id         String   @id @default(uuid()) @map("id")
-  recipeId   String   @map("recipeid")
-  stepNumber Int      @map("stepnumber")
-  description String  @map("description")
-  createdAt  DateTime @default(now()) @map("createdAt")
-  updatedAt  DateTime @updatedAt      @map("updatedAt")
+  id          String   @id @default(uuid()) @map("id")
+  recipeId    String   @map("recipeid")
+  stepNumber  Int      @map("stepnumber")
+  description String   @map("description")
+  createdAt   DateTime @default(now()) @map("createdAt")
+  updatedAt   DateTime @updatedAt @map("updatedAt")
+
+  // Relations
+  recipe Recipe @relation(fields: [recipeId], references: [id])
 
   @@map("instruction")
 }
 
+// ----------------------------
 // ratings table
+// ----------------------------
 model Rating {
   id        String   @id @default(uuid()) @map("id")
   recipeId  String   @map("recipeid")
@@ -69,28 +101,44 @@ model Rating {
   rating    Int      @map("rating")
   createdAt DateTime @default(now()) @map("createdAt")
 
+  // Relations
+  recipe Recipe @relation(fields: [recipeId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+
   @@unique([recipeId, userId])
   @@map("rating")
 }
 
+// ----------------------------
 // comments table
+// ----------------------------
 model Comment {
   id        String   @id @default(uuid()) @map("id")
   recipeId  String   @map("recipeid")
   userId    String   @map("userid")
   content   String   @map("content")
   createdAt DateTime @default(now()) @map("createdAt")
-  updatedAt DateTime @updatedAt      @map("updatedAt")
+  updatedAt DateTime @updatedAt @map("updatedAt")
+
+  // Relations
+  recipe Recipe @relation(fields: [recipeId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
 
   @@map("comment")
 }
 
+// ----------------------------
 // follows table
+// ----------------------------
 model Follow {
   id          String   @id @default(uuid()) @map("id")
   followerId  String   @map("followerid")
   followingId String   @map("followingid")
   createdAt   DateTime @default(now()) @map("createdAt")
+
+  // Relations
+  follower  User @relation("Follower", fields: [followerId], references: [id])
+  following User @relation("Following", fields: [followingId], references: [id])
 
   @@unique([followerId, followingId])
   @@map("follow")

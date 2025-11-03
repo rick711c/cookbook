@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # 1. Node.js Cookbook Backend Service
+  node_app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      ELASTIC_HOST: http://elasticsearch_db:9200
+      NODE_ENV: production
+    depends_on:
+      elasticsearch_db:
+        condition: service_healthy
+    networks:
+      - cookbook_net
+
+  # 2. Elasticsearch Search Engine Service
+  elasticsearch_db:
+    image: elasticsearch:8.10.2
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9200"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - cookbook_net
+
+# Named volume for Elasticsearch persistent data
+volumes:
+  esdata:
+    driver: local
+
+# Network for service communication
+networks:
+  cookbook_net:
+    driver: bridge

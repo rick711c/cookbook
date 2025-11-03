@@ -8,7 +8,7 @@ export class RecipieService {
 
   async createRecipie(input: CreateRecipieInput) {
     try {
-      const res = await this.repo.createRecipie(input);
+      const res = await this.repo.createRecipe(input);
       return res;
     } catch (err) {
       throw err;

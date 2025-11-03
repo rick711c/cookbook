@@ -20,6 +20,12 @@ export interface LoginInput {
 }
 
 export interface CreateRecipieInput {
+    recipie: RecipieInput;
+    ingredients: CreateIngredientDto[];
+    instructions: AddInstructionDto[];
+}
+
+export interface RecipieInput {
     userId: string;
     title: string;
     description: string;
@@ -65,17 +71,6 @@ export interface AuthPayload {
     user: User;
 }
 
-export interface Recipie {
-    userId: string;
-    title: string;
-    description: string;
-    prepTime: number;
-    cookTime: number;
-    servings: number;
-    createdAt: DateTime;
-    updatedAt: DateTime;
-}
-
 export interface Ingredient {
     id: string;
     recipeId: string;
@@ -92,6 +87,19 @@ export interface Instruction {
     description: string;
     createdAt: DateTime;
     updatedAt: DateTime;
+}
+
+export interface Recipie {
+    userId: string;
+    title: string;
+    description: string;
+    prepTime: number;
+    cookTime: number;
+    servings: number;
+    createdAt: DateTime;
+    updatedAt: DateTime;
+    ingredients: Ingredient[];
+    instructions: Instruction[];
 }
 
 export interface Rating {
